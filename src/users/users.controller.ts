@@ -9,14 +9,15 @@ import {
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { AppDataSource } from 'src/Database/dataSource';
 
 @Controller('users')
 export class UsersController {
   constructor(private service: UsersService) {}
 
   @Get(':id')
-  get(@Param() params) {
-    return this.service.getUser(params.id);
+  async get(@Param() params) {
+    return AppDataSource.manager.findOneBy(User, params.id);
   }
 
   @Post()

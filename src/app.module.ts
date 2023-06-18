@@ -11,7 +11,7 @@ import { User } from './users/user.entity';
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'teste',
+      database: 'apiDatabase',
       synchronize: true,
       dropSchema: true,
       entities: [User],
