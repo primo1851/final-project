@@ -31,8 +31,24 @@
 ```bash
 $ npm install
 ```
+## Starting database
+  
+```bash
+$ mysql -h localhost -u root  -p
+password: root
+CREATE DATABASE apiDatabase;
+USE apiDatabase;
 
-## Running the app
+```
+To show all info on database
+
+```bash
+SELECT * FROM Users;
+
+
+```
+
+# Running the app
 
 ```bash
 # development
