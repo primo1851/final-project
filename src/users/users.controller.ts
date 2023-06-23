@@ -18,7 +18,7 @@ export class UsersController {
     return this.service.getUser(user.id);
   }
 
-  @Get('/addCard')
+  @Post('/addCard')
   async addCard(@Body() user: User) {
     console.log('New card with number: ' + user.cardNumber + 'is available');
     return this.service.addCard(user);
