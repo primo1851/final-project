@@ -1,57 +1,45 @@
-import { Length } from 'class-validator';
-import { Cards } from 'src/cards/cards.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  JoinColumn,
-  OneToOne,
-} from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Entity()
-export class Transfers {
-  @PrimaryGeneratedColumn('uuid')
+@Schema()
+export class Transfer {
+  @Prop()
   reqCounter: number;
 
-  @Column({ default: '1' })
+  @Prop()
   id: number;
 
-  @Column({ default: 'Jane' })
-  @Length(25)
+  @Prop()
   firstNameSender: string;
 
-  @Column({ default: 'Doe' })
-  @Length(25)
+  @Prop()
   lastNameSender: string;
 
-  @Column({ default: '12345' })
+  @Prop()
   bankAccountSender: number;
 
-  @Column({ default: '123' })
+  @Prop()
   securityCodeSender: number;
 
-  @Column({ default: '12348998765432491' })
+  @Prop()
   cardNumberSender: string;
 
-  @Column({ default: 'John' })
-  @Length(25)
+  @Prop()
   firstNameRecipient: string;
 
-  @Column({ default: 'Deree' })
-  @Length(25)
+  @Prop()
   lastNameRecipient: string;
 
-  @Column({ default: '54321' })
+  @Prop()
   bankAccountRecipient: number;
 
-  @Column({ default: '312' })
+  @Prop()
   securityCodeRecipient: number;
 
-  @Column({ default: '1234567899876589' })
+  @Prop()
   cardNumberRecipient: string;
 
-  @OneToOne(() => Cards)
-  @JoinColumn()
-  card: Cards;
+  // @OneToOne(() => Cards)
+  // @JoinProp()
+  // card: Cards;
 }
+export const TransferSchema = SchemaFactory.createForClass(Transfer);

@@ -1,51 +1,50 @@
-import { Length } from 'class-validator';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
 import { Cards } from 'src/cards/cards.entity';
-import { Transfers } from 'src/transfers/transfer.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
+import { Transfer } from 'src/transfers/transfer.entity';
 
-@Entity()
+export type UserDocument = HydratedDocument<User>;
+
+@Schema()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @Prop()
   reqCounter: number;
 
-  @Column({ default: '1' })
+  @Prop()
   id: number;
 
-  @Column({ default: 'Jane' })
-  @Length(25)
+  @Prop()
   firstName: string;
 
-  @Column({ default: 'Marie' })
-  @Length(25)
+  @Prop()
   middleName?: string;
 
-  @Column({ default: 'Doe' })
-  @Length(25)
+  @Prop()
   lastName: string;
 
-  @Column({ default: '2005-05-01' })
+  @Prop()
   birthday: Date;
 
-  @Column({ default: '12345' })
+  @Prop()
   bankAccount: number;
 
-  @Column({ default: '123' })
+  @Prop()
   securityCode: number;
 
-  @Column({ default: '123456789987654321' })
+  @Prop()
   cardNumber: string;
 
-  @OneToMany(() => Cards, (card) => card.user)
-  cards: Cards[];
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Cards' })
+  card: Cards;
 
-  @ManyToMany(() => Transfers)
-  @JoinTable()
-  transfers: Transfers[];
+  // @OneToMany(() => Cards, (card) => card.user)
+  // cards: Cards[];
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transfers' }] })
+  transfer: Transfer[];
+  user: Cards[];
+  // @ManyToMany(() => Transfers)
+  // @JoinTable()
+  // transfers: Transfers[];
 }
+export const UserSchema = SchemaFactory.createForClass(User);

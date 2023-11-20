@@ -1,32 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { User } from './user.entity';
 import { Cards } from 'src/cards/cards.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { User } from './user.entity';
+import { UserDto } from 'src/dtos/user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
+  async createUser(createUserDto: UserDto): Promise<User> {
+    const createdUser = new this.userModel(createUserDto);
+    return createdUser.save();
+  }
   async getUsers(): Promise<User[]> {
-    return await this.usersRepository.find({
-      select: [
-        'id',
-        'firstName',
-        'middleName',
-        'lastName',
-        'bankAccount',
-        'cardNumber',
-        'securityCode',
-        'birthday',
-      ],
-    });
+    return this.userModel.find().exec();
   }
 
   async getUser(_id: number): Promise<User[]> {
-    return await this.usersRepository.find({
+    return await this.userModel.find({
       select: {
         firstName: true,
         middleName: true,
@@ -40,43 +32,38 @@ export class UsersService {
     });
   }
 
-  async addCard(user: User): Promise<User[]> {
+  async addCard(createUserDto: UserDto): Promise<User> {
+    const createdUser = new this.userModel(createUserDto);
+
     const newCard1 = new Cards();
     newCard1.cardNumber = '9876543210';
-    this.usersRepository.save(newCard1);
+    await newCard1.save(); // Save the card to the database
 
     const newCard2 = new Cards();
     newCard2.cardNumber = '9878941220';
-    this.usersRepository.save(newCard1);
+    await newCard2.save(); // Save the second card to the database
 
-    user.cards = [newCard1, newCard2];
-    return this.usersRepository.save(user.cards);
+    createdUser.cards = [newCard1, newCard2]; // Assign cards to the user
+    await createdUser.save(); // Save the user with the associated cards
+
+    return createdUser;
   }
 
-  createUser(user: User): Promise<User> {
-    return this.usersRepository.save(user);
+  async updateUsers(createUserDto: Partial<UserDto>): Promise<User> {
+    const updatedUser = new this.userModel(createUserDto);
+    updatedUser.id = 3;
+    updatedUser.firstName = 'Timber';
+    updatedUser.lastName = 'Sawyer';
+    await updatedUser.save();
+    return updatedUser;
   }
-  async updateUser() {
-    this.usersRepository.save({
-      id: 3,
-      firstName: 'Timber',
-      lastName: 'Saw',
+
+  async deleteUser(_id: number) {
+    const deletionResult = await this.userModel.findOneAndDelete({
+      _id: _id,
     });
-  }
+    console.log('Deleted');
 
-  async deleteUser(user: User, _id: number) {
-    await this.usersRepository.find({
-      select: {
-        firstName: true,
-        middleName: true,
-        lastName: true,
-        bankAccount: true,
-        cardNumber: true,
-        securityCode: true,
-        birthday: true,
-      },
-      where: { id: _id },
-    });
-    this.usersRepository.delete(user);
+    return deletionResult; // Return the deleted user
   }
 }

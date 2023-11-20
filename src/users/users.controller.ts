@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Put, Delete } from '@nestjs/common';
-import { User } from './user.entity';
 import { UsersService } from './users.service';
+import { UserDto } from 'src/dtos/user.dto';
 
 @Controller('users')
 export class UsersController {
@@ -13,30 +13,30 @@ export class UsersController {
   }
 
   @Get(':id')
-  async get(@Body() user: User) {
+  async get(@Body() user: UserDto) {
     console.log('User with id number: ' + user.id + 'is available');
     return this.service.getUser(user.id);
   }
 
   @Post('/addCard')
-  async addCard(@Body() user: User) {
+  async addCard(@Body() user: UserDto) {
     console.log('New card with number: ' + user.cardNumber + 'is available');
     return this.service.addCard(user);
   }
   @Post()
-  create(@Body() user: User) {
+  create(@Body() user: UserDto) {
     console.log('New user was created');
     return this.service.createUser(user);
   }
 
   @Put()
-  update() {
+  updateUsers(@Body() user: UserDto) {
     console.log('User was updated');
-    return this.service.updateUser();
+    return this.service.updateUsers(user);
   }
 
   @Delete(':id')
-  deleteUser(@Body() user: User) {
+  deleteUser(@Body() user: UserDto) {
     console.log('User was deleted');
     return this.service.deleteUser(user, user.id);
   }

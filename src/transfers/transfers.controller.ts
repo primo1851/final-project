@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Put, Delete } from '@nestjs/common';
 import { TransfersService } from './transfers.service';
-import { Transfers } from './transfer.entity';
+import { TransfersDto } from 'src/dtos/transfers.dto';
 
 @Controller('transfers')
 export class TransfersController {
@@ -9,30 +9,30 @@ export class TransfersController {
   @Get('/')
   async getAll() {
     console.log('All transferss are shown');
-    return this.service.getTransferss();
+    return this.service.getAllTransfers();
   }
 
   @Get(':id')
-  async get(@Body() transfers: Transfers) {
+  async get(@Body() transfers: TransfersDto) {
     console.log('Transfers with id number: ' + transfers.id + 'is available');
     return this.service.getTransfers(transfers.id);
   }
 
   @Post()
-  create(@Body() transfers: Transfers) {
+  create(@Body() transfers: TransfersDto) {
     console.log('New transfers was created');
     return this.service.createTransfers(transfers);
   }
 
   @Put()
-  update() {
+  update(@Body() transfers: TransfersDto) {
     console.log('Transfers was updated');
-    return this.service.updateTransfers();
+    return this.service.updateTransfers(transfers);
   }
 
   @Delete(':id')
-  deleteTransfers(@Body() transfers: Transfers) {
+  deleteTransfers(@Body() transfers: TransfersDto) {
     console.log('Transfers was deleted');
-    return this.service.deleteTransfers(transfers, transfers.id);
+    return this.service.deleteTransfers(transfers.id);
   }
 }
