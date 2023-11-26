@@ -37,8 +37,9 @@ $ npm install
 ```bash
 
 # Running the app
-
-sudo systemctl start mongod
+ 
+#starting mongoDB on Ubuntu
+$ sudo systemctl start mongod
 
 # development
 $ npm run dev
