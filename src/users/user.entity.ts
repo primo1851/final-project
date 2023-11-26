@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument } from 'mongoose';
-import { Cards } from 'src/cards/cards.entity';
+import mongoose, { HydratedDocument, SchemaDefinitionProperty } from 'mongoose';
+import { CardDto } from 'src/dtos/card.dto';
+import { UserDto } from 'src/dtos/user.dto';
 import { Transfer } from 'src/transfers/transfer.entity';
 
 export type UserDocument = HydratedDocument<User>;
@@ -35,16 +36,10 @@ export class User {
   cardNumber: string;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Cards' })
-  card: Cards;
-
-  // @OneToMany(() => Cards, (card) => card.user)
-  // cards: Cards[];
+  card: CardDto;
 
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transfers' }] })
   transfer: Transfer[];
-  user: Cards[];
-  // @ManyToMany(() => Transfers)
-  // @JoinTable()
-  // transfers: Transfers[];
+  user: UserDto[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

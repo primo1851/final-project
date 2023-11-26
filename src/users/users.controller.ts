@@ -6,10 +6,10 @@ import { UserDto } from 'src/dtos/user.dto';
 export class UsersController {
   constructor(private service: UsersService) {}
 
-  @Get('')
+  @Get()
   async getAll() {
     console.log('All info is shown');
-    return this.service.getUsers();
+    return this.service.getAllUsers();
   }
 
   @Get(':id')
@@ -18,11 +18,6 @@ export class UsersController {
     return this.service.getUser(user.id);
   }
 
-  @Post('/addCard')
-  async addCard(@Body() user: UserDto) {
-    console.log('New card with number: ' + user.cardNumber + 'is available');
-    return this.service.addCard(user);
-  }
   @Post()
   create(@Body() user: UserDto) {
     console.log('New user was created');
@@ -30,14 +25,14 @@ export class UsersController {
   }
 
   @Put()
-  updateUsers(@Body() user: UserDto) {
+  updateUsers() {
     console.log('User was updated');
-    return this.service.updateUsers(user);
+    return this.service.updateUsers();
   }
 
   @Delete(':id')
   deleteUser(@Body() user: UserDto) {
     console.log('User was deleted');
-    return this.service.deleteUser(user, user.id);
+    return this.service.deleteUser(user.id);
   }
 }

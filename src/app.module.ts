@@ -2,14 +2,13 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { CardsModule } from './cards/cards.module';
 import { TransfersModule } from './transfers/transfers.module';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongoDBModule } from './mongo/Mongo.module';
+import { UsersController } from './users/users.controller';
+import { TransfersController } from './transfers/transfers.controller';
+import { CardsController } from './cards/cards.controller';
 
 @Module({
-  imports: [
-    MongooseModule.forRoot('mongodb://localhost/nest'),
-    UsersModule,
-    CardsModule,
-    TransfersModule,
-  ],
+  imports: [UsersModule, CardsModule, TransfersModule, MongoDBModule],
+  controllers: [UsersController, TransfersController, CardsController],
 })
 export class AppModule {}

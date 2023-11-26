@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UserSchema } from './user.entity';
 import { UsersController } from './users.controller';
-import { MongooseModule } from '@nestjs/mongoose/dist/mongoose.module';
-import { User, UserSchema } from './user.entity';
+import { UsersService } from './users.service';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forRoot('mongodb://localhost:27017/onlineBanking'),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],
-  providers: [UsersService],
   controllers: [UsersController],
+  providers: [UsersService],
+  exports: [UsersService],
 })
 export class UsersModule {}

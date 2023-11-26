@@ -1,12 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { AppDataSource } from './Database/dataSource';
+import { MongoDBService } from './mongo/mongo.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
 
-  const isInitialized: boolean = AppDataSource.isInitialized;
-  console.log(isInitialized);
+  const mongoDBService = app.get(MongoDBService);
+  await mongoDBService.connect();
+
+  await app.listen(3000);
+  console.log('Application is running on port 3000');
 }
 bootstrap();

@@ -1,9 +1,10 @@
 import { Length } from 'class-validator';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { TransfersDto } from './transfers.dto';
 
 @Entity()
 export class UserDto {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   reqCounter: number;
 
   @Column({ default: '1' })
@@ -32,4 +33,7 @@ export class UserDto {
 
   @Column({ default: '123456789987654321' })
   cardNumber: string;
+
+  @OneToMany(() => TransfersDto, (transfer) => transfer.user)
+  Transfers: TransfersDto[];
 }

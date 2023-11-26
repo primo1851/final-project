@@ -14,36 +14,29 @@ export class TransfersService {
     return this.transferModel.find().exec();
   }
 
-  async getTransfers(_id: number): Promise<Transfer[]> {
-    return await this.transferModel.find({
-      select: {
-        firstNameSender: true,
-        lastNameSender: true,
-        bankAccountSender: true,
-        securityCodeSender: true,
-        cardNumberSender: true,
-        firstNameRecipient: true,
-        lastNameRecipient: true,
-        bankAccountRecipient: true,
-        securityCodeRecipient: true,
-        cardNumberRecipient: true,
-      },
-      where: { id: _id },
-    });
+  async getTransfers(_id: number): Promise<Transfer> {
+    const transfer = await this.transferModel
+      .findById(_id)
+      .select(
+        'firstName middleName lastName bankAccount cardNumber securityCode birthday',
+      )
+      .exec();
+    return transfer;
   }
 
-  async createTransfers(transfers: TransfersDto): Promise<Transfer> {
-    const createTransfers = new this.transferModel(transfers);
-    return createTransfers.save();
+  async createTransfers(newTransferDto: TransfersDto): Promise<Transfer> {
+    const newTransfer = new this.transferModel(newTransferDto);
+    const createdTransfer = await newTransfer.save();
+    return createdTransfer;
   }
 
   async updateTransfers(transfers: TransfersDto): Promise<Transfer> {
-    const updatedUser = new this.transferModel(transfers);
-    updatedUser.bankAccountSender = 3;
-    updatedUser.firstNameRecipient = 'Timber';
-    updatedUser.lastNameSender = 'Sawyer';
-    await updatedUser.save();
-    return updatedUser;
+    const updatedTransfer = new this.transferModel(transfers);
+    updatedTransfer.bankAccountSender = 3;
+    updatedTransfer.firstNameRecipient = 'Timber';
+    updatedTransfer.lastNameSender = 'Sawyer';
+    await updatedTransfer.save();
+    return updatedTransfer;
   }
 
   async deleteTransfers(_id: number) {

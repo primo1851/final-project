@@ -1,33 +1,29 @@
-import { Length } from 'class-validator';
-import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-@Entity()
-export class Cards {
-  @PrimaryGeneratedColumn('uuid')
+@Schema()
+export class Card {
+  @Prop()
   reqCounter: number;
 
-  @Column({ default: 'Jane' })
-  @Length(25)
+  @Prop()
   firstNameCard: string;
 
-  @Column({ default: 'Marie' })
-  @Length(25)
+  @Prop()
   middleNameCard?: string;
 
-  @Column({ default: 'Doe' })
-  @Length(25)
+  @Prop()
   lastNameCard: string;
 
-  @Column({ default: '01/05' })
+  @Prop()
   expirationDate: string;
 
-  @Column({ default: '123' })
+  @Prop()
   securityCode: number;
 
-  @Column({ default: '123456789987654321' })
+  @Prop()
   cardNumber: string;
 
-  @ManyToOne(() => User, (user) => user.cards)
-  user: User;
+  // @ManyToOne(() => User, (user) => user.cards)
+  // user: User;
 }
+export const CardSchema = SchemaFactory.createForClass(Card);

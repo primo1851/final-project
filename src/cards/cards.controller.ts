@@ -1,16 +1,7 @@
-import {
-  Controller,
-  Get,
-  Param,
-  Post,
-  Body,
-  Put,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Delete } from '@nestjs/common';
 
-import { AppDataSource } from 'src/Database/dataSource';
 import { CardsService } from './cards.service';
-import { Cards } from './cards.entity';
+import { CardDto } from 'src/dtos/card.dto';
 
 @Controller('cards')
 export class CardsController {
@@ -23,15 +14,15 @@ export class CardsController {
   }
 
   @Get(':securityCode')
-  async get(@Body() cards: Cards) {
+  async get(@Body() cards: CardDto) {
     console.log(
       'cards with securityCode number: ' + cards.securityCode + 'is available',
     );
-    return this.service.getCards(cards.securityCode);
+    return this.service.getCard(cards.securityCode);
   }
 
   @Post()
-  create(@Body() cards: Cards) {
+  create(@Body() cards: CardDto) {
     console.log('New cards was created');
     return this.service.createCards(cards);
   }
@@ -43,8 +34,8 @@ export class CardsController {
   }
 
   @Delete(':securityCode')
-  deletecards(@Body() cards: Cards) {
+  deletecards(@Body() cards: CardDto) {
     console.log('All cards were deleted');
-    return this.service.deleteCards(cards, cards.securityCode);
+    return this.service.deleteCards(cards.securityCode);
   }
 }

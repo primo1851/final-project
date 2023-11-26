@@ -35,16 +35,13 @@ $ npm install
 ## Starting database
   
 ```bash
-$ mysql -h localhost -u root  -p
-password: root
-CREATE DATABASE apiDatabase;
-USE apiDatabase;
+sudo systemctl start mongod
+
 
 ```
 To show all info on database
 
 ```bash
-SELECT * FROM Users;
 
 
 ```

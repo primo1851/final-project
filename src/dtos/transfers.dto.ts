@@ -1,13 +1,15 @@
 import { Length } from 'class-validator';
-import { Cards } from 'src/cards/cards.entity';
+import { Card } from 'src/cards/cards.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
   JoinColumn,
   OneToOne,
+  ManyToOne,
 } from 'typeorm';
+import { UserDto } from './user.dto';
+import { CardDto } from './card.dto';
 
 @Entity()
 export class TransfersDto {
@@ -51,7 +53,11 @@ export class TransfersDto {
   @Column({ default: '1234567899876589' })
   cardNumberRecipient: string;
 
-  // @OneToOne(() => Cards)
-  // @JoinColumn()
-  // card: Cards;
+  @OneToOne(() => Card)
+  @JoinColumn()
+  card: CardDto;
+
+  @ManyToOne(() => Card)
+  @JoinColumn()
+  user: UserDto;
 }

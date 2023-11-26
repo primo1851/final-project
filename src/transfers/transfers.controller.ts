@@ -15,19 +15,13 @@ export class TransfersController {
   @Get(':id')
   async get(@Body() transfers: TransfersDto) {
     console.log('Transfers with id number: ' + transfers.id + 'is available');
-    return this.service.getTransfers(transfers.id);
+    return this.service.getAllTransfers();
   }
 
   @Post()
   create(@Body() transfers: TransfersDto) {
     console.log('New transfers was created');
     return this.service.createTransfers(transfers);
-  }
-
-  @Put()
-  update(@Body() transfers: TransfersDto) {
-    console.log('Transfers was updated');
-    return this.service.updateTransfers(transfers);
   }
 
   @Delete(':id')
