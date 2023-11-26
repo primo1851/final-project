@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Card } from './cards.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema, model } from 'mongoose';
-import { CardDto } from 'src/dtos/card.dto';
+import { CardDto } from '../dtos/card.dto';
 
 @Injectable()
 export class CardsService {

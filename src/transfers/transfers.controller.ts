@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Put, Delete } from '@nestjs/common';
 import { TransfersService } from './transfers.service';
-import { TransfersDto } from 'src/dtos/transfers.dto';
+import { TransfersDto } from '../dtos/transfers.dto';
 
 @Controller('transfers')
 export class TransfersController {

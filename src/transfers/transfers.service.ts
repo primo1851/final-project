@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Transfer } from './transfer.entity';
 import { Model } from 'mongoose';
-import { TransfersDto } from 'src/dtos/transfers.dto';
+import { TransfersDto } from '../dtos/transfers.dto';
 
 @Injectable()
 export class TransfersService {

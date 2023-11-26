@@ -37,20 +37,11 @@ $ npm install
 ```bash
 sudo systemctl start mongod
 
-
-```
-To show all info on database
-
-```bash
-
-
-```
-
 # Running the app
 
 ```bash
 # development
-$ npm run start
+$ npm run dev
 
 # watch mode
 $ npm run start:dev

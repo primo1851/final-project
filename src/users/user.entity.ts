@@ -1,8 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, SchemaDefinitionProperty } from 'mongoose';
-import { CardDto } from 'src/dtos/card.dto';
-import { UserDto } from 'src/dtos/user.dto';
-import { Transfer } from 'src/transfers/transfer.entity';
+import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -24,7 +21,7 @@ export class User {
   lastName: string;
 
   @Prop()
-  birthday: Date;
+  birthday: number;
 
   @Prop()
   bankAccount: number;
@@ -34,12 +31,5 @@ export class User {
 
   @Prop()
   cardNumber: string;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Cards' })
-  card: CardDto;
-
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transfers' }] })
-  transfer: Transfer[];
-  user: UserDto[];
 }
 export const UserSchema = SchemaFactory.createForClass(User);

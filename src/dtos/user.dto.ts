@@ -23,17 +23,11 @@ export class UserDto {
   lastName: string;
 
   @Column({ default: '2005-05-01' })
-  birthday: Date;
+  birthday: number;
 
   @Column({ default: '12345' })
   bankAccount: number;
 
   @Column({ default: '123' })
   securityCode: number;
-
-  @Column({ default: '123456789987654321' })
-  cardNumber: string;
-
-  @OneToMany(() => TransfersDto, (transfer) => transfer.user)
-  Transfers: TransfersDto[];
 }

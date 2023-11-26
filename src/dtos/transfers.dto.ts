@@ -1,5 +1,5 @@
 import { Length } from 'class-validator';
-import { Card } from 'src/cards/cards.entity';
+import { Card } from '../cards/cards.entity';
 import {
   Entity,
   Column,
