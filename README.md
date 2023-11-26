@@ -35,11 +35,11 @@ $ npm install
 ## Starting database
   
 ```bash
-sudo systemctl start mongod
 
 # Running the app
 
-```bash
+sudo systemctl start mongod
+
 # development
 $ npm run dev
 
